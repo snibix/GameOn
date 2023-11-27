@@ -541,3 +541,7 @@ footer {
     transform: translateY(-50px);
   }
 }
+.error {
+  border: 1px solid red;
+  background-color: #ffebe8;
+}
