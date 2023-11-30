@@ -55,12 +55,15 @@ let combienTournois = document.getElementById("quantity");
 let btnSubmit = document.querySelector(".btn-submit");
 // recup la value du check box
 let quelTournois = document.querySelectorAll("input[type=radio]");
-let tournoiSelectionner = null;
+
+// function recupValue() {
+//   console.log(this.value);
+// }
 function recupValue() {
-  console.log(this.value);
-}
-for (let i = 0; i < quelTournois.length; i++) {
-  quelTournois[i].addEventListener("change", recupValue);
+  // Dans ce contexte, vous pouvez accéder à la valeur de la case à cocher directement
+  const checkboxValue = this.value;
+  console.log(checkboxValue);
+  return checkboxValue;
 }
 let conditions = document.getElementById("checkbox1");
 let prevenir = document.getElementById("checkbox2");
@@ -83,26 +86,14 @@ function verifEmail(balise) {
     balise.classList.add("error");
   }
 }
-// ecouteur lors du submit pour eviter le refresh de la page avec preventdefault
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  prenom;
-  nom;
-  email;
-  dateDeNaissance;
-  combienTournois;
-  conditions;
-  prevenir;
-  console.log(
-    prenom.value,
-    nom.value,
-    email.value,
-    dateDeNaissance.value,
-    combienTournois.value,
-    conditions.checked,
-    prevenir.checked
-  );
-});
+// function qui verifie si le checkbox et conditions sont cocher
+function verifCheckbox(checkbox) {
+  if (checkbox.checked !== undefined && checkbox.checked !== false) {
+    btnSubmit.disabled = false;
+  } else {
+    btnSubmit.disabled = true;
+  }
+}
 // ecouteur qui verifie si les champs du formulaire sont bien remplis
 prenom.addEventListener("change", () => {
   verifChamps(prenom);
@@ -124,14 +115,47 @@ combienTournois.addEventListener("change", () => {
   verifChamps(combienTournois);
   console.log(combienTournois.value);
 });
+
+for (let i = 0; i < quelTournois.length; i++) {
+  quelTournois[i].addEventListener("change", function () {
+    const checkboxValue = recupValue.call(this);
+    // Utilisez checkboxValue comme nécessaire, peut-être dans la fonction verifCheckbox
+    verifCheckbox(this); // Transmettez directement la case à cocher à la fonction verifCheckbox
+  });
+}
+
 conditions.addEventListener("change", () => {
   console.log(conditions.checked);
-  if (!conditions.checked) {
-    btnSubmit.disabled = true;
-  } else {
-    btnSubmit.disabled = false;
-  }
+  verifCheckbox(conditions);
 });
 prevenir.addEventListener("change", () => {
   console.log(prevenir.checked);
+});
+// ecouteur lors du submit pour eviter le refresh de la page avec preventdefault
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  //Parcourir la NodeList quelTournois pour vérifier chaque case à cocher
+  const isAnyCheckboxChecked = Array.from(quelTournois).some(
+    (checkbox) => checkbox.checked
+  );
+  // Vérifiez si toutes les conditions sont remplies avant de permettre la soumission du formulaire
+  if (
+    prenom.value !== "" &&
+    nom.value !== "" &&
+    email.value !== "" &&
+    dateDeNaissance.value !== "" &&
+    combienTournois.value !== "" &&
+    conditions.checked &&
+    isAnyCheckboxChecked
+  ) {
+    // Le formulaire est complet
+    btnSubmit.disabled = false;
+    console.log("Formulaire soumis !");
+  } else {
+    // Affichez un message d'erreur
+    btnSubmit.disabled = true;
+    console.log(
+      "Veuillez remplir tous les champs et cocher les cases nécessaires."
+    );
+  }
 });

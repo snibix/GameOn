@@ -527,21 +527,3 @@ footer {
     opacity: 1;
   }
 }
-/**********************************CSS PERSO*************************/
-.close-modal {
-  animation: modalclose 1s ease-in-out;
-}
-@keyframes modalclose {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-}
-.error {
-  border: 1px solid red;
-  background-color: #ffebe8;
-}
