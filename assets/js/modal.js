@@ -1,3 +1,4 @@
+// Fonction pour éditer la navigation
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -7,20 +8,20 @@ function editNav() {
   }
 }
 
-// DOM Elements
+// Éléments du DOM
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelectorAll(".close");
 
-// launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-modalClose.forEach((span) => span.addEventListener("click", closeModal));
+// Événement de lancement de la modal
+modalBtn.forEach((btn) => btn.addEventListener("click", lancerModal));
+modalClose.forEach((span) => span.addEventListener("click", fermerModal));
 
 let popup = document.querySelector(".content");
 
-// function launch modal form
-function launchModal() {
+// Fonction pour lancer le formulaire modal
+function lancerModal() {
   if (popup && modalbg) {
     popup.style.display = "block";
     modalbg.style.display = "block";
@@ -31,8 +32,9 @@ function launchModal() {
     modalbg.classList.remove("close-modal");
   }
 }
-// function Close modal form
-function closeModal() {
+
+// Fonction pour fermer le formulaire modal
+function fermerModal() {
   if (popup && modalbg) {
     popup.classList.add("close-modal");
     modalbg.classList.add("close-modal");
@@ -46,116 +48,276 @@ function closeModal() {
     console.error("La modal n'a pas été trouvée.");
   }
 }
-// recup des données envoyer
+
+// Récupération des données envoyées
 let prenom = document.getElementById("prenom");
 let nom = document.getElementById("nom");
 let email = document.getElementById("email");
 let dateDeNaissance = document.getElementById("birthdate");
 let combienTournois = document.getElementById("quantity");
 let btnSubmit = document.querySelector(".btn-submit");
-// recup la value du check box
+
+// Récupération de la valeur de la case à cocher
 let quelTournois = document.querySelectorAll("input[type=radio]");
 
-// function recupValue() {
-//   console.log(this.value);
-// }
-function recupValue() {
-  // Dans ce contexte, vous pouvez accéder à la valeur de la case à cocher directement
-  const checkboxValue = this.value;
-  console.log(checkboxValue);
-  return checkboxValue;
+function recupererValeur() {
+  const valeurCheckbox = this.value;
+  console.log(valeurCheckbox);
+  return valeurCheckbox;
 }
+
 let conditions = document.getElementById("checkbox1");
 let prevenir = document.getElementById("checkbox2");
-// function qui verifie si le champs saisie et correct et ajout une class error en cas d'erreur
-function verifChamps(balise) {
+
+// Fonction pour vérifier si le champ est correct
+function verifierChamp(balise) {
   if (balise.value === "") {
     balise.classList.add("error");
   } else {
     balise.classList.remove("error");
   }
 }
-let form = document.querySelector("form");
-// fonction qui verif si l'email et valide
-function verifEmail(balise) {
-  let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z._-]+\\.[a-z._-]+");
-  if (emailRegExp.test(balise.value)) {
+
+let formulaire = document.querySelector("form");
+
+// Fonction pour vérifier si l'email est valide
+function verifierEmail(balise) {
+  let expressionReguliereEmail = new RegExp(
+    "[a-z0-9._-]+@[a-z._-]+\\.[a-z._-]+"
+  );
+  if (expressionReguliereEmail.test(balise.value)) {
     console.log("ok");
     balise.classList.remove("error");
   } else {
     balise.classList.add("error");
   }
+  return expressionReguliereEmail.test(balise.value);
 }
-// function qui verifie si le checkbox et conditions sont cocher
-function verifCheckbox(checkbox) {
-  if (checkbox.checked !== undefined && checkbox.checked !== false) {
-    btnSubmit.disabled = false;
-  } else {
-    btnSubmit.disabled = true;
+
+// Fonction pour afficher le message d'erreur
+function afficherMessageErreur(message) {
+  const messageErreur = document.getElementById("error-message");
+  messageErreur.textContent = message;
+  messageErreur.style.display = "block";
+}
+
+// Fonction pour cacher le message d'erreur
+function cacherMessageErreur() {
+  const messageErreur = document.getElementById("error-message");
+  messageErreur.textContent = "";
+  messageErreur.style.display = "none";
+}
+
+// Fonction pour afficher un message de succès
+function afficherMessageSucces(message) {
+  const messageSucces = document.getElementById("success-message");
+  messageSucces.textContent = message;
+  messageSucces.style.display = "block";
+}
+
+// Fonction pour afficher le message d'erreur sous le champ de saisie
+function afficherMessageErreurChamp(champ, message, baliseInput) {
+  const idMessageErreur = `${champ.toLowerCase()}-error`;
+  let elementMessageErreur = document.getElementById(idMessageErreur);
+
+  if (!elementMessageErreur) {
+    elementMessageErreur = document.createElement("div");
+    elementMessageErreur.id = idMessageErreur;
+    elementMessageErreur.classList.add("error-message");
+    baliseInput.parentNode.appendChild(elementMessageErreur);
+  }
+
+  elementMessageErreur.textContent = message;
+
+  // Effacer le message d'erreur après un court délai (3000 millisecondes ou 3 secondes)
+  setTimeout(() => {
+    elementMessageErreur.textContent = "";
+  }, 3000);
+}
+
+// Fonction pour cacher le message d'erreur sous le champ de saisie
+function cacherMessageErreurChamp(champ) {
+  const idMessageErreur = `${champ.toLowerCase()}-error`;
+  const elementMessageErreur = document.getElementById(idMessageErreur);
+
+  if (elementMessageErreur) {
+    elementMessageErreur.textContent = "";
   }
 }
-// ecouteur qui verifie si les champs du formulaire sont bien remplis
+
+// Événements qui vérifient si les champs du formulaire sont bien remplis
 prenom.addEventListener("change", () => {
-  verifChamps(prenom);
+  verifierChamp(prenom);
+  cacherMessageErreurChamp("Prénom");
   console.log(prenom.value);
 });
 nom.addEventListener("change", () => {
-  verifChamps(nom);
+  verifierChamp(nom);
+  cacherMessageErreurChamp("Nom");
   console.log(nom.value);
 });
 email.addEventListener("change", () => {
-  verifEmail(email);
+  verifierEmail(email);
+  cacherMessageErreurChamp("Email");
   console.log(email.value);
 });
 dateDeNaissance.addEventListener("change", () => {
-  verifChamps(dateDeNaissance);
+  verifierChamp(dateDeNaissance);
+  cacherMessageErreurChamp("Date de Naissance");
   console.log(dateDeNaissance.value);
 });
 combienTournois.addEventListener("change", () => {
-  verifChamps(combienTournois);
+  verifierChamp(combienTournois);
+  cacherMessageErreurChamp("combien de tournois");
   console.log(combienTournois.value);
 });
+// Validation des cases à cocher 'quelTournois'
+let auMoinsUneCheckboxTournois = false;
 
 for (let i = 0; i < quelTournois.length; i++) {
+  if (!quelTournois[i].checked) {
+    auMoinsUneCheckboxTournois = true;
+    break;
+  }
+}
+function verifierCheckbox(checkbox, champ, messageErreur) {
+  if (!checkbox.checked) {
+    afficherMessageErreurChamp(champ, messageErreur, checkbox);
+  } else {
+    cacherMessageErreurChamp(champ);
+  }
+}
+for (let i = 0; i < quelTournois.length; i++) {
   quelTournois[i].addEventListener("change", function () {
-    const checkboxValue = recupValue.call(this);
-    // Utilisez checkboxValue comme nécessaire, peut-être dans la fonction verifCheckbox
-    verifCheckbox(this); // Transmettez directement la case à cocher à la fonction verifCheckbox
+    cacherMessageErreurChamp("Quel tournois");
+    const valeurCheckbox = recupererValeur.call(this);
+    verifierCheckbox(this, "Quel tournois", "Vous devez choisir une option.");
   });
 }
-
 conditions.addEventListener("change", () => {
-  console.log(conditions.checked);
-  verifCheckbox(conditions);
+  verifierCheckbox(
+    conditions,
+    "Conditions d'utilisation",
+    "Vous devez acceptez les termes et conditions."
+  );
 });
 prevenir.addEventListener("change", () => {
   console.log(prevenir.checked);
 });
-// ecouteur lors du submit pour eviter le refresh de la page avec preventdefault
-form.addEventListener("submit", (event) => {
+// Fonction pour afficher le message d'erreur sous le champ de saisie
+function afficherMessageErreurChamp(champ, message, baliseInput) {
+  const idMessageErreur = `${champ.toLowerCase()}-error`;
+  let elementMessageErreur = document.getElementById(idMessageErreur);
+  if (!elementMessageErreur) {
+    elementMessageErreur = document.createElement("div");
+    elementMessageErreur.id = idMessageErreur;
+    elementMessageErreur.classList.add("error-message");
+    baliseInput.parentNode.appendChild(elementMessageErreur);
+  }
+
+  elementMessageErreur.textContent = message;
+}
+// Fonction pour cacher le message d'erreur sous le champ de saisie
+function cacherMessageErreurChamp(champ) {
+  const idMessageErreur = `${champ.toLowerCase()}-error`;
+  const elementMessageErreur = document.getElementById(idMessageErreur);
+
+  if (elementMessageErreur) {
+    elementMessageErreur.textContent = "";
+  }
+}
+// Événement de soumission du formulaire
+formulaire.addEventListener("submit", (event) => {
   event.preventDefault();
-  //Parcourir la NodeList quelTournois pour vérifier chaque case à cocher
-  const isAnyCheckboxChecked = Array.from(quelTournois).some(
-    (checkbox) => checkbox.checked
-  );
-  // Vérifiez si toutes les conditions sont remplies avant de permettre la soumission du formulaire
-  if (
-    prenom.value !== "" &&
-    nom.value !== "" &&
-    email.value !== "" &&
-    dateDeNaissance.value !== "" &&
-    combienTournois.value !== "" &&
-    conditions.checked &&
-    isAnyCheckboxChecked
-  ) {
-    // Le formulaire est complet
+  let estValide = true;
+
+  if (prenom.value === "") {
+    afficherMessageErreurChamp(
+      "Prénom",
+      "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
+      prenom
+    );
+    estValide = false;
+  } else {
+    cacherMessageErreurChamp("Prénom");
+  }
+
+  if (nom.value === "") {
+    afficherMessageErreurChamp(
+      "Nom",
+      "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
+      nom
+    );
+    estValide = false;
+  } else {
+    cacherMessageErreurChamp("Nom");
+  }
+
+  if (email.value === "") {
+    afficherMessageErreurChamp("Email", "Ce champ est obligatoire.", email);
+    estValide = false;
+  } else if (!verifierEmail(email)) {
+    afficherMessageErreurChamp("Email", "Adresse email invalide.", email);
+    estValide = false;
+  } else {
+    cacherMessageErreurChamp("Email");
+  }
+
+  if (dateDeNaissance.value === "") {
+    afficherMessageErreurChamp(
+      "Date de Naissance",
+      "Vous devez entrer votre date de naissance.",
+      dateDeNaissance
+    );
+    estValide = false;
+  } else {
+    cacherMessageErreurChamp("Date de Naissance");
+  }
+
+  if (combienTournois.value === "") {
+    afficherMessageErreurChamp(
+      "Combien de tournois",
+      "Veuillez entrer un nombre entre 0 et 99",
+      combienTournois
+    );
+    estValide = false;
+  } else {
+    cacherMessageErreurChamp("Combien de tournois");
+  }
+
+  if (auMoinsUneCheckboxTournois) {
+    afficherMessageErreurChamp(
+      "Quel tournois",
+      "Vous devez choisir une option.",
+      quelTournois[0]
+    );
+    estValide = false;
+  } else {
+    cacherMessageErreurChamp("Quel tournois");
+  }
+
+  if (conditions.checked === false) {
+    afficherMessageErreurChamp(
+      "Conditions d'utilisation",
+      "Vous devez vérifier acceptez les termes et conditions.",
+      conditions
+    );
+    estValide = false;
+  } else {
+    cacherMessageErreurChamp("Conditions d'utilisation");
+  }
+
+  if (estValide) {
+    // Le formulaire est complet et valide, masquer les messages d'erreur
+    cacherMessageErreur();
     btnSubmit.disabled = false;
+
+    // Afficher le message de succès
+    afficherMessageSucces("Merci ! Votre réservation a été reçue.");
     console.log("Formulaire soumis !");
   } else {
-    // Affichez un message d'erreur
+    // Afficher un message d'erreur général
     btnSubmit.disabled = true;
-    console.log(
-      "Veuillez remplir tous les champs et cocher les cases nécessaires."
-    );
+    console.log("Veuillez remplir tous les champs correctement.");
   }
 });
