@@ -1,5 +1,11 @@
-.close-modal {
-  animation: modalclose 1s ease-in-out;
+@keyframes modalopen {
+  from {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes modalclose {
   from {
@@ -8,8 +14,21 @@
   }
   to {
     opacity: 0;
-    transform: translateY(-50px);
+    transform: translateY(-150px);
   }
+}
+@keyframes modalCloseSucess {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+}
+.close-modal {
+  animation: modalclose 1s ease-in-out;
 }
 .error {
   border: 1px solid red;
@@ -20,4 +39,31 @@
   font-size: 13px;
   text-align: start;
   padding: 5px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 40%;
+  width: 400px;
+  padding: 5px;
+  animation: modalopen 1s ease-in-out;
+  background-color: #232323;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+}
+
+/* Styles pour le fond sombre derrière la fenêtre modale */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 900;
 }

@@ -7,7 +7,6 @@ function editNav() {
     x.className = "topnav";
   }
 }
-
 // Éléments du DOM
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -19,20 +18,13 @@ modalBtn.forEach((btn) => btn.addEventListener("click", lancerModal));
 modalClose.forEach((span) => span.addEventListener("click", fermerModal));
 
 let popup = document.querySelector(".content");
-
+let modalSucess = document.querySelector(".modal-sucess");
+let modalSucessOverlay = document.querySelector(".modal-overlay");
 // Fonction pour lancer le formulaire modal
 function lancerModal() {
-  if (popup && modalbg) {
-    popup.style.display = "block";
-    modalbg.style.display = "block";
-  } else {
-    popup.style.display = "none";
-    modalbg.style.display = "none";
-    popup.classList.remove("close-modal");
-    modalbg.classList.remove("close-modal");
-  }
+  popup.style.display = "block";
+  modalbg.style.display = "block";
 }
-
 // Fonction pour fermer le formulaire modal
 function fermerModal() {
   if (popup && modalbg) {
@@ -49,26 +41,44 @@ function fermerModal() {
   }
 }
 
+function lancerModalSucess() {
+  modalSucess.style.display = "block";
+  modalSucessOverlay.style.display = "block";
+}
+// Fonction pour fermer la fenêtre modale
+function fermerModalSucess() {
+  if (modalSucess && modalSucessOverlay) {
+    modalSucessOverlay.classList.add("close-modal");
+    modalSucess.classList.add("close-modal");
+    setTimeout(function () {
+      modalSucces.style.display = "none";
+      modalSucessOverlay.style.display = "none";
+      modalSucces.classList.remove("close-modal");
+      modalSucessOverlay.classList.remove("close-modal");
+    }, 900);
+  } else {
+    console.error("La modal n'a pas été trouvée.");
+  }
+}
 // Récupération des données envoyées
-let prenom = document.getElementById("prenom");
-let nom = document.getElementById("nom");
-let email = document.getElementById("email");
-let dateDeNaissance = document.getElementById("birthdate");
-let combienTournois = document.getElementById("quantity");
+let prenom = document.querySelector("#prenom");
+let nom = document.querySelector("#nom");
+let email = document.querySelector("#email");
+let dateDeNaissance = document.querySelector("#birthdate");
+let combienTournois = document.querySelector("#quantity");
 let btnSubmit = document.querySelector(".btn-submit");
-
+//Modal de formulaire envoyer
+let successModal = document.querySelector("#modal");
+let sucessModalOverlay = document.querySelector("#modal-overlay");
 // Récupération de la valeur de la case à cocher
 let quelTournois = document.querySelectorAll("input[type=radio]");
-
 function recupererValeur() {
   const valeurCheckbox = this.value;
   console.log(valeurCheckbox);
   return valeurCheckbox;
 }
-
-let conditions = document.getElementById("checkbox1");
-let prevenir = document.getElementById("checkbox2");
-
+let conditions = document.querySelector("#checkbox1");
+let prevenir = document.querySelector("#checkbox2");
 // Fonction pour vérifier si le champ est correct
 function verifierChamp(balise) {
   if (balise.value === "") {
@@ -77,9 +87,7 @@ function verifierChamp(balise) {
     balise.classList.remove("error");
   }
 }
-
 let formulaire = document.querySelector("form");
-
 // Fonction pour vérifier si l'email est valide
 function verifierEmail(balise) {
   let expressionReguliereEmail = new RegExp(
@@ -93,28 +101,24 @@ function verifierEmail(balise) {
   }
   return expressionReguliereEmail.test(balise.value);
 }
-
 // Fonction pour afficher le message d'erreur
 function afficherMessageErreur(message) {
   const messageErreur = document.getElementById("error-message");
   messageErreur.textContent = message;
   messageErreur.style.display = "block";
 }
-
 // Fonction pour cacher le message d'erreur
 function cacherMessageErreur() {
   const messageErreur = document.getElementById("error-message");
   messageErreur.textContent = "";
   messageErreur.style.display = "none";
 }
-
 // Fonction pour afficher un message de succès
 function afficherMessageSucces(message) {
   const messageSucces = document.getElementById("success-message");
   messageSucces.textContent = message;
   messageSucces.style.display = "block";
 }
-
 // Fonction pour afficher le message d'erreur sous le champ de saisie
 function afficherMessageErreurChamp(champ, message, baliseInput) {
   const idMessageErreur = `${champ.toLowerCase()}-error`;
@@ -126,25 +130,20 @@ function afficherMessageErreurChamp(champ, message, baliseInput) {
     elementMessageErreur.classList.add("error-message");
     baliseInput.parentNode.appendChild(elementMessageErreur);
   }
-
   elementMessageErreur.textContent = message;
-
   // Effacer le message d'erreur après un court délai (3000 millisecondes ou 3 secondes)
   setTimeout(() => {
     elementMessageErreur.textContent = "";
   }, 3000);
 }
-
 // Fonction pour cacher le message d'erreur sous le champ de saisie
 function cacherMessageErreurChamp(champ) {
   const idMessageErreur = `${champ.toLowerCase()}-error`;
   const elementMessageErreur = document.getElementById(idMessageErreur);
-
   if (elementMessageErreur) {
     elementMessageErreur.textContent = "";
   }
 }
-
 // Événements qui vérifient si les champs du formulaire sont bien remplis
 prenom.addEventListener("change", () => {
   verifierChamp(prenom);
@@ -171,9 +170,10 @@ combienTournois.addEventListener("change", () => {
   cacherMessageErreurChamp("combien de tournois");
   console.log(combienTournois.value);
 });
+
 // Validation des cases à cocher 'quelTournois'
 let auMoinsUneCheckboxTournois = false;
-
+console.log("États actuels des cases à cocher :", quelTournois);
 for (let i = 0; i < quelTournois.length; i++) {
   if (!quelTournois[i].checked) {
     auMoinsUneCheckboxTournois = true;
@@ -214,7 +214,6 @@ function afficherMessageErreurChamp(champ, message, baliseInput) {
     elementMessageErreur.classList.add("error-message");
     baliseInput.parentNode.appendChild(elementMessageErreur);
   }
-
   elementMessageErreur.textContent = message;
 }
 // Fonction pour cacher le message d'erreur sous le champ de saisie
@@ -226,11 +225,13 @@ function cacherMessageErreurChamp(champ) {
     elementMessageErreur.textContent = "";
   }
 }
+function resetFormulaire() {
+  formulaire.reset();
+}
 // Événement de soumission du formulaire
 formulaire.addEventListener("submit", (event) => {
   event.preventDefault();
   let estValide = true;
-
   if (prenom.value === "") {
     afficherMessageErreurChamp(
       "Prénom",
@@ -241,7 +242,6 @@ formulaire.addEventListener("submit", (event) => {
   } else {
     cacherMessageErreurChamp("Prénom");
   }
-
   if (nom.value === "") {
     afficherMessageErreurChamp(
       "Nom",
@@ -252,7 +252,6 @@ formulaire.addEventListener("submit", (event) => {
   } else {
     cacherMessageErreurChamp("Nom");
   }
-
   if (email.value === "") {
     afficherMessageErreurChamp("Email", "Ce champ est obligatoire.", email);
     estValide = false;
@@ -262,7 +261,6 @@ formulaire.addEventListener("submit", (event) => {
   } else {
     cacherMessageErreurChamp("Email");
   }
-
   if (dateDeNaissance.value === "") {
     afficherMessageErreurChamp(
       "Date de Naissance",
@@ -273,7 +271,6 @@ formulaire.addEventListener("submit", (event) => {
   } else {
     cacherMessageErreurChamp("Date de Naissance");
   }
-
   if (combienTournois.value === "") {
     afficherMessageErreurChamp(
       "Combien de tournois",
@@ -284,8 +281,12 @@ formulaire.addEventListener("submit", (event) => {
   } else {
     cacherMessageErreurChamp("Combien de tournois");
   }
-
-  if (auMoinsUneCheckboxTournois) {
+  // Boucle pour vérifier l'état des cases à cocher
+  let auMoinsUneCheckboxTournois = Array.from(quelTournois).some(
+    (checkbox) => checkbox.checked
+  );
+  // Utilisation de la variable auMoinsUneCheckboxTournois plus tard dans le code
+  if (!auMoinsUneCheckboxTournois) {
     afficherMessageErreurChamp(
       "Quel tournois",
       "Vous devez choisir une option.",
@@ -295,7 +296,6 @@ formulaire.addEventListener("submit", (event) => {
   } else {
     cacherMessageErreurChamp("Quel tournois");
   }
-
   if (conditions.checked === false) {
     afficherMessageErreurChamp(
       "Conditions d'utilisation",
@@ -306,18 +306,16 @@ formulaire.addEventListener("submit", (event) => {
   } else {
     cacherMessageErreurChamp("Conditions d'utilisation");
   }
-
   if (estValide) {
     // Le formulaire est complet et valide, masquer les messages d'erreur
     cacherMessageErreur();
-    btnSubmit.disabled = false;
-
     // Afficher le message de succès
-    afficherMessageSucces("Merci ! Votre réservation a été reçue.");
+    fermerModal();
+    resetFormulaire();
+    lancerModalSucess();
     console.log("Formulaire soumis !");
   } else {
     // Afficher un message d'erreur général
-    btnSubmit.disabled = true;
     console.log("Veuillez remplir tous les champs correctement.");
   }
 });

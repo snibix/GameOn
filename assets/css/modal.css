@@ -170,7 +170,6 @@ main {
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
 }
-
 .content {
   margin: 5% auto;
   width: 100%;
@@ -324,7 +323,8 @@ input[data-error]::after {
   transform: rotate(-45deg);
 }
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.btn-sucess-close {
   background: #fe142f;
   display: block;
   margin: 0 auto;
@@ -516,14 +516,5 @@ footer {
   .copyrights {
     margin-top: 50px;
     text-align: center;
-  }
-}
-@keyframes modalopen {
-  from {
-    opacity: 0;
-    transform: translateY(-150px);
-  }
-  to {
-    opacity: 1;
   }
 }
