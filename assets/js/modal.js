@@ -12,11 +12,14 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelectorAll(".close");
+const modalCloseSucess = document.querySelectorAll(".close-sucess");
 
 // Événement de lancement de la modal
 modalBtn.forEach((btn) => btn.addEventListener("click", lancerModal));
 modalClose.forEach((span) => span.addEventListener("click", fermerModal));
-
+modalCloseSucess.forEach((span) =>
+  span.addEventListener("click", fermerModalSucess)
+);
 let popup = document.querySelector(".content");
 let modalSucess = document.querySelector(".modal-sucess");
 let modalSucessOverlay = document.querySelector(".modal-overlay");
@@ -42,19 +45,19 @@ function fermerModal() {
 }
 
 function lancerModalSucess() {
-  modalSucess.style.display = "block";
+  modalSucess.style.display = "flex";
   modalSucessOverlay.style.display = "block";
 }
 // Fonction pour fermer la fenêtre modale
 function fermerModalSucess() {
   if (modalSucess && modalSucessOverlay) {
-    modalSucessOverlay.classList.add("close-modal");
-    modalSucess.classList.add("close-modal");
+    modalSucessOverlay.classList.add("close-sucess-modal");
+    modalSucess.classList.add("close-sucess-modal");
     setTimeout(function () {
-      modalSucces.style.display = "none";
+      modalSucess.style.display = "none";
       modalSucessOverlay.style.display = "none";
-      modalSucces.classList.remove("close-modal");
-      modalSucessOverlay.classList.remove("close-modal");
+      modalSucess.classList.remove("close-sucess-modal");
+      modalSucessOverlay.classList.remove("close-sucess-modal");
     }, 900);
   } else {
     console.error("La modal n'a pas été trouvée.");
@@ -94,7 +97,6 @@ function verifierEmail(balise) {
     "[a-z0-9._-]+@[a-z._-]+\\.[a-z._-]+"
   );
   if (expressionReguliereEmail.test(balise.value)) {
-    console.log("ok");
     balise.classList.remove("error");
   } else {
     balise.classList.add("error");
