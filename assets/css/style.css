@@ -38,7 +38,7 @@
   color: rgb(230, 53, 53);
   font-size: 13px;
   text-align: start;
-  padding: 5px;
+  padding: 2px 5px;
 }
 .modal {
   display: none;
@@ -136,7 +136,7 @@
     font-weight: 500;
   }
   .logo {
-    width: 65%;
+    width: 70%;
   }
   .topnav {
     display: flex;
@@ -146,5 +146,8 @@
   }
   .topnav a {
     font-size: 30px;
+  }
+  .modal-body {
+    height: 90%;
   }
 }
