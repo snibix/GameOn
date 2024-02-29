@@ -40,6 +40,10 @@
   text-align: start;
   padding: 2px 5px;
 }
+.input-error {
+  border: 1px solid red;
+  background-color: red;
+}
 .modal {
   display: none;
   flex-direction: column;
