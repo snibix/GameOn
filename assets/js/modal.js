@@ -43,7 +43,6 @@ function fermerModal() {
     console.error("La modal n'a pas été trouvée.");
   }
 }
-
 function lancerModalSucess() {
   modalSucess.style.display = "flex";
   modalSucessOverlay.style.display = "block";

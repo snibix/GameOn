@@ -59,7 +59,6 @@ img {
 }
 
 .topnav a.active {
-  background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
   top: 10;
@@ -79,15 +78,12 @@ img {
     float: right;
     display: block;
   }
-}
-
-@media screen and (max-width: 768px) {
   .topnav.responsive {
     position: relative;
   }
   .topnav.responsive .icon {
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 0;
   }
   .topnav.responsive a {
@@ -97,7 +93,6 @@ img {
     font-size: 20px;
   }
 }
-
 @media screen and (max-width: 540px) {
   .topnav a {
     display: none;
@@ -533,7 +528,6 @@ footer {
     font-size: 13px;
   }
 }
-/************************************Code perso *******************************/
 @keyframes modalopen {
   from {
     opacity: 0;
@@ -641,10 +635,27 @@ footer {
 }
 .btn-sucess-close {
   margin-bottom: 10px;
-  /* animation: modalclose 1s ease-in-out; */
 }
 
 @media screen and (max-width: 768px) {
+  .main-navbar {
+    position: relative;
+  }
+  .menu-mobile {
+    position: fixed;
+    top: 0;
+    right: 10px;
+    z-index: 3000;
+    background-color: #e54858;
+  }
+  .topnav a:hover {
+    background-color: #e54858;
+    color: #ffffff;
+    border-radius: 15px;
+  }
+  .menu-mobile a {
+    color: white;
+  }
   .modal {
     top: 10%;
     left: 0;
@@ -655,7 +666,6 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 200px;
   }
   .modal-sucess {
     top: 8%;
@@ -691,15 +701,11 @@ footer {
     justify-content: space-between;
     padding: 0 5px;
   }
-  .test {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .topnav a {
-    font-size: 30px;
-  }
   .modal-body {
     height: 90%;
+  }
+  .hero-img img {
+    width: 97%;
+    margin: 0 10px;
   }
 }
