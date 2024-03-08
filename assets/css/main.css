@@ -92,6 +92,9 @@ img {
     text-align: left;
     font-size: 20px;
   }
+  .topnav a:hover {
+    background-color: white;
+  }
 }
 @media screen and (max-width: 540px) {
   .topnav a {
@@ -645,16 +648,15 @@ footer {
     position: fixed;
     top: 0;
     right: 10px;
-    z-index: 3000;
-    background-color: #e54858;
+    z-index: 999;
+    background-color: #ffffff;
   }
   .topnav a:hover {
-    background-color: #e54858;
-    color: #ffffff;
+    color: red;
     border-radius: 15px;
   }
   .menu-mobile a {
-    color: white;
+    color: red;
   }
   .modal {
     top: 10%;
