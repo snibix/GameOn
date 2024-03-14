@@ -93,7 +93,9 @@ function verifierChamp(balise) {
 let formulaire = document.querySelector("form");
 // Fonction pour vérifier si l'email est valide
 function verifierEmail(balise) {
-  return /[a-z0-9._-]+@[a-z0-9._-]+\.[a-z._-]+/.test(balise.value);
+  const emailRegex = /[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]+/;
+  return emailRegex.test(balise.value);
+  // return /[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]+/.test(balise.value);
 }
 // Fonction pour afficher le message d'erreur
 function showErrorMessage(item) {
