@@ -63,15 +63,18 @@ function fermerModalSucess() {
   }
 }
 // Récupération des données envoyées
+let formulaire = document.querySelector("form");
 let prenom = document.querySelector("#prenom");
 let nom = document.querySelector("#nom");
 let email = document.querySelector("#email");
 let dateDeNaissance = document.querySelector("#birthdate");
 let combienTournois = document.querySelector("#quantity");
 let btnSubmit = document.querySelector(".btn-submit");
-//Modal de formulaire envoyer
+
+//Modal de formulaire envoyer avec success
 let successModal = document.querySelector("#modal");
 let sucessModalOverlay = document.querySelector("#modal-overlay");
+
 // Récupération de la valeur de la case à cocher
 const quelTournois = document.querySelectorAll(".modal-body input[type=radio]");
 console.log(quelTournois);
@@ -82,21 +85,21 @@ function recupererValeur() {
 }
 let conditions = document.querySelector("#checkbox1");
 let prevenir = document.querySelector("#checkbox2");
+
 // Fonction pour vérifier si le champ est correct
 function verifierChamp(balise) {
-  if (balise.value === "") {
+  if (balise.value === "" || balise.value.lenght <= 2) {
     showErrorMessage(balise);
   } else {
     hideErrorMessage(balise);
   }
 }
-let formulaire = document.querySelector("form");
+
 // Fonction pour vérifier si l'email est valide
 function verifierEmail(balise) {
-  const emailRegex = /[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]+/;
-  return emailRegex.test(balise.value);
-  // return /[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]+/.test(balise.value);
+  return /[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]+/.test(balise.value);
 }
+
 // Fonction pour afficher le message d'erreur
 function showErrorMessage(item) {
   const parent = item.closest(".formData");
@@ -104,6 +107,7 @@ function showErrorMessage(item) {
     parent.setAttribute("data-error-visible", "true");
   }
 }
+
 // Fonction pour cacher le message d'erreur
 function hideErrorMessage(item) {
   const parent = item.closest(".formData");
@@ -111,31 +115,29 @@ function hideErrorMessage(item) {
     parent.setAttribute("data-error-visible", "false");
   }
 }
-// Fonction pour afficher un message de succès
-function afficherMessageSucces(message) {
-  const messageSucces = document.getElementById("success-message");
-  messageSucces.textContent = message;
-  messageSucces.style.display = "block";
-}
-// Fonction pour cacher le message d'erreur sous le champ de saisie
-function cacherMessageErreurChamp(champ) {
-  const idMessageErreur = `${champ.toLowerCase()}-error`;
-  const elementMessageErreur = document.getElementById(idMessageErreur);
-  if (elementMessageErreur) {
-    elementMessageErreur.textContent = "";
-  }
-}
 // Événements qui vérifient si les champs du formulaire sont bien remplis
-prenom.addEventListener("change", () => {
-  verifierChamp(prenom);
+prenom.addEventListener("input", () => {
+  if (prenom.value.length < 2 || prenom.value === "") {
+    showErrorMessage(prenom);
+  } else {
+    hideErrorMessage(prenom);
+  }
 });
-nom.addEventListener("change", () => {
-  verifierChamp(nom);
+nom.addEventListener("input", () => {
+  if (nom.value.length < 2 || nom.value === "") {
+    showErrorMessage(nom);
+  } else {
+    hideErrorMessage(nom);
+  }
 });
-email.addEventListener("change", () => {
-  verifierEmail(email);
+email.addEventListener("input", () => {
+  if (verifierEmail(email)) {
+    hideErrorMessage(email);
+  } else {
+    showErrorMessage(email);
+  }
 });
-dateDeNaissance.addEventListener("change", () => {
+dateDeNaissance.addEventListener("input", () => {
   verifierChamp(dateDeNaissance);
 });
 combienTournois.addEventListener("change", () => {
@@ -155,17 +157,18 @@ prevenir.addEventListener("change", () => {
 function resetFormulaire() {
   formulaire.reset();
 }
+
 // Événement de soumission du formulaire
 formulaire.addEventListener("submit", (event) => {
   event.preventDefault();
   let estValide = true;
-  if (prenom.value === "") {
+  if (prenom.value === "" || prenom.value.length < 2) {
     showErrorMessage(prenom);
     estValide = false;
   } else {
     hideErrorMessage(prenom);
   }
-  if (nom.value === "") {
+  if (nom.value === "" || nom.value.length < 2) {
     showErrorMessage(nom);
     estValide = false;
   } else {
