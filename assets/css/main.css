@@ -592,7 +592,6 @@ footer {
     text-align: center;
   }
   .hero-headline {
-    font-size: 45px;
     font-weight: 500;
   }
   .logo {
@@ -629,7 +628,7 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 3em;
+    font-size: 55px;
     white-space: normal;
   }
   .hero-text {
