@@ -474,7 +474,7 @@ footer {
 .modal-sucess {
   display: none;
   position: fixed;
-  top: 15%;
+  top: 10%;
   left: 35%;
   width: 530px;
   height: 850px;
